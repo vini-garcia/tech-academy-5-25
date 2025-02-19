@@ -8,28 +8,36 @@ interface ItemOrdemServico {
     quantidade: number
 }
 
-let desconto = 0.5 //percentual
 
-function calcular (itens: Array<ItemOrdemServico>, valorMaoDeObra: number, frete: number) {
-    
-    let x = 0
+function calcularTotalLiquidoOrdemServico (itens: ItemOrdemServico[], valorMaoDeObra: number, freteBase: number): number {
+    const percentualDesconto: number = 0.5
+    const totalBruto = calcularTotalBrutoOrdemServico(itens)
+    const maoDeObra = calcularMaoDeObra(valorMaoDeObra)
+    const frete = calcularFrete(freteBase)
+    const valorComDesconto = calcularDesconto(totalBruto, percentualDesconto)
 
-    itens.forEach(item => {
-        x += item.peca.preco * item.quantidade
-    })
+    return valorComDesconto + maoDeObra + frete
+}
 
-    if (valorMaoDeObra > 1000) {
-        valorMaoDeObra = 1000
-    }
-    x += valorMaoDeObra
+function calcularTotalBrutoOrdemServico(itens: ItemOrdemServico[]): number {
+    return itens.reduce(
+        (soma, item) => soma + (item.peca.preco * item.quantidade), 0
+    )
+}
 
-    if (x > 500) {
-        frete = frete - (frete * 0.2)
-    }
+function calcularMaoDeObra(valorMaoDeObra: number): number {
+    return (valorMaoDeObra > 1000) ? 1000 : valorMaoDeObra
+}
 
-    x += frete
 
-    x = x * desconto
+function calcularFrete(freteBase: number): number {
+    return verificarFreteTemDesconto(freteBase) ? freteBase - (freteBase * 0.2): freteBase
+}
 
-    return x
+function verificarFreteTemDesconto(frete: number): boolean {
+    return frete > 500
+}
+
+function calcularDesconto(totalBruto: number, percentualDesconto: number): number {
+    return totalBruto * percentualDesconto
 }
