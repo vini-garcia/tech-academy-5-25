@@ -3,15 +3,22 @@
  * Todo:
  * Refatore a função calcular:
  */
-function calcular(arr: number[]): number {
-    let x = 0
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] % 2 === 0) {
-            x += arr[i]
-        }
-    }
-    return x
+function somarNumerosPares(numeros: number[]): number {
+    const numerosPares = filtrarNumerosPares(numeros)
+    return somarNumeros(numerosPares)
 }
 
-const numbers = [1, 2, 3, 4, 5, 6]
-console.log(calcular(numbers))
+function validarParidade(numero: number): boolean {
+    return numero % 2 === 0
+}
+
+function filtrarNumerosPares(numeros: number[]): number[] {
+    return numeros.filter(numero => validarParidade(numero))
+}
+
+function somarNumeros(numeros: number[]): number {
+    return numeros.reduce((soma,numero) => soma + numero, 0)
+}
+
+const numeros = [1, 2, 3, 4, 5, 6]
+console.log(somarNumerosPares(numeros))
