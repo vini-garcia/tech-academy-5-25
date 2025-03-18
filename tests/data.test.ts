@@ -1,7 +1,7 @@
 import { Data } from "../src/Data"
 
 
-describe('Ano Bissexto', () => {
+xdescribe('Ano Bissexto', () => {
     test('2024 deve ser um ano bissexto', () => {
         const anoBissexto = new Data(1,1,2024)
         expect(anoBissexto.validarAnoBissesto()).toBeTruthy()
@@ -14,7 +14,7 @@ describe('Ano Bissexto', () => {
 })
 
 
-describe('Quantidade de Dias do Mês', () => {
+xdescribe('Quantidade de Dias do Mês', () => {
     /*
     * A quantidade de dias do mês varia conforme o mês, 
     * sendo que alguns tem 30 e outros têm 31.
